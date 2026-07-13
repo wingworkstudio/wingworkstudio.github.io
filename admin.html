@@ -21,10 +21,149 @@
             padding: 16px;
         }
 
+        /* ----- 登录遮罩层 ----- */
+        .auth-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(9, 14, 27, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            padding: 20px;
+            transition: opacity 0.45s ease;
+        }
+        .auth-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .auth-card {
+            background: #162033;
+            border-radius: 52px;
+            padding: 38px 36px 42px;
+            max-width: 420px;
+            width: 100%;
+            box-shadow: 0 30px 55px rgba(0,0,0,0.8), 0 0 0 1px rgba(72, 126, 230, 0.25);
+            border: 1px solid rgba(110, 160, 235, 0.15);
+            text-align: center;
+            transition: 0.2s;
+        }
+
+        .auth-icon {
+            font-size: 44px;
+            margin-bottom: 6px;
+        }
+        .auth-title {
+            color: #e3edff;
+            font-size: 26px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+        .auth-sub {
+            color: #95afd4;
+            font-size: 15px;
+            margin-bottom: 28px;
+            border-bottom: 1px dashed #2f4770;
+            padding-bottom: 16px;
+        }
+
+        .auth-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+        .auth-input-group input {
+            background: #101b30;
+            border: 1px solid #2f4b78;
+            border-radius: 80px;
+            padding: 16px 22px;
+            font-size: 18px;
+            color: #eaf1ff;
+            outline: none;
+            transition: 0.15s;
+            text-align: center;
+            letter-spacing: 2px;
+            font-weight: 500;
+        }
+        .auth-input-group input:focus {
+            border-color: #6390db;
+            box-shadow: 0 0 0 2px rgba(70, 125, 220, 0.3);
+        }
+        .auth-input-group input:disabled {
+            opacity: 0.5;
+            filter: grayscale(0.6);
+            cursor: not-allowed;
+        }
+
+        .auth-btn {
+            background: #1f3b64;
+            border: none;
+            border-radius: 80px;
+            padding: 15px 20px;
+            font-size: 19px;
+            font-weight: 560;
+            color: #dceaff;
+            border: 1px solid #3a6193;
+            cursor: pointer;
+            transition: 0.12s;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+        }
+        .auth-btn:active {
+            transform: scale(0.96);
+            background: #122845;
+        }
+        .auth-btn:disabled {
+            opacity: 0.4;
+            transform: scale(1);
+            cursor: not-allowed;
+            background: #1f2a42;
+        }
+
+        .auth-error {
+            color: #fcad9f;
+            background: #281f31;
+            padding: 10px 12px;
+            border-radius: 60px;
+            font-size: 14px;
+            margin-top: 10px;
+            border: 1px solid #794a4a;
+            display: none;
+        }
+        .auth-error.show {
+            display: block;
+        }
+
+        .auth-locked-msg {
+            color: #cb9d7c;
+            font-size: 15px;
+            background: #291e21;
+            padding: 12px;
+            border-radius: 60px;
+            border: 1px solid #784545;
+            margin-top: 12px;
+            display: none;
+        }
+        .auth-locked-msg.show {
+            display: block;
+        }
+
+        .attempt-badge {
+            color: #869fc7;
+            font-size: 14px;
+            margin-top: 6px;
+        }
+
+        /* ----- 管理后台卡片 (初始隐藏) ----- */
         .admin-card {
             width: 100%;
             max-width: 1200px;
-            background: rgba(22, 30, 49, 0.82);
+            background: rgba(22, 30, 49, 0.88);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border-radius: 40px;
@@ -32,6 +171,11 @@
             box-shadow: 0 30px 50px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(76, 130, 250, 0.15);
             border: 1px solid rgba(140, 170, 215, 0.15);
             transition: all 0.2s;
+            display: none;  /* 默认隐藏，认证通过后显示 */
+        }
+
+        .admin-card.visible {
+            display: block;
         }
 
         .header {
@@ -313,7 +457,25 @@
     </style>
 </head>
 <body>
-<div class="admin-card">
+
+<!-- ========== 密码认证遮罩 ========== -->
+<div class="auth-overlay" id="authOverlay">
+    <div class="auth-card">
+        <div class="auth-icon">🔐</div>
+        <div class="auth-title">飞友工作室</div>
+        <div class="auth-sub">管理后台 · 授权访问</div>
+        <div class="auth-input-group">
+            <input type="password" id="passwordInput" placeholder="输入管理员密码" autocomplete="off" maxlength="20" />
+        </div>
+        <button class="auth-btn" id="authBtn">验证身份</button>
+        <div class="auth-error" id="authError">✗ 密码错误，请重试</div>
+        <div class="auth-locked-msg" id="lockedMsg">⛔ 密码已锁定 · 请联系管理员</div>
+        <div class="attempt-badge" id="attemptBadge">剩余尝试次数：5</div>
+    </div>
+</div>
+
+<!-- ========== 管理后台主体 (初始隐藏) ========== -->
+<div class="admin-card" id="adminCard">
     <!-- 头部 -->
     <div class="header">
         <div class="brand-admin">
@@ -324,21 +486,21 @@
 
     <!-- 双栏布局：成员 + 网站时况 -->
     <div class="grid-wrapper">
-        <!-- 左侧：工作室成员名录 (依据文档) -->
+        <!-- 左侧：工作室成员名录 -->
         <div class="member-list">
             <div class="list-header">
                 <span>👥 工作室成员 (2026)</span>
                 <span>#</span>
             </div>
             <div id="memberContainer">
-                <!-- 由 JS 动态渲染成员列表，保留原始顺序及昵称风格 -->
+                <!-- 由 JS 动态渲染成员列表 -->
             </div>
             <div style="margin-top: 8px; color:#60789f; font-size:13px; padding:4px 6px;">
                 <span style="background:#1b2a44; padding:2px 14px; border-radius:40px;">✈️ 以上成员来自 wingworkstudio 文档</span>
             </div>
         </div>
 
-        <!-- 右侧：网站实时预览 (wingworkstudio.github.io) -->
+        <!-- 右侧：网站实时预览 -->
         <div class="site-preview">
             <div class="preview-header">
                 <div class="preview-dot">
@@ -371,7 +533,109 @@
 
 <script>
     (function() {
-        // ---------- 成员数据 (严格按照文档内容，保留原样) ----------
+        // ---------- 认证状态 ----------
+        const CORRECT_PASSWORD = '13579';   // 密码不公开，但代码可见；用户要求不公布，故不在界面显示
+        const MAX_ATTEMPTS = 5;
+        let attemptLeft = MAX_ATTEMPTS;
+        let isLocked = false;
+
+        // DOM 元素
+        const overlay = document.getElementById('authOverlay');
+        const adminCard = document.getElementById('adminCard');
+        const passwordInput = document.getElementById('passwordInput');
+        const authBtn = document.getElementById('authBtn');
+        const authError = document.getElementById('authError');
+        const lockedMsg = document.getElementById('lockedMsg');
+        const attemptBadge = document.getElementById('attemptBadge');
+
+        // 更新剩余尝试显示
+        function updateAttemptDisplay() {
+            if (isLocked) {
+                attemptBadge.textContent = '⛔ 已锁定';
+                attemptBadge.style.color = '#cb7a5e';
+            } else {
+                attemptBadge.textContent = `剩余尝试次数：${attemptLeft}`;
+                attemptBadge.style.color = '#869fc7';
+            }
+        }
+
+        // 锁定密码框
+        function lockPassword() {
+            isLocked = true;
+            passwordInput.disabled = true;
+            authBtn.disabled = true;
+            lockedMsg.classList.add('show');
+            authError.classList.remove('show');
+            updateAttemptDisplay();
+        }
+
+        // 错误尝试处理
+        function handleWrongPassword() {
+            attemptLeft--;
+            updateAttemptDisplay();
+            if (attemptLeft <= 0) {
+                lockPassword();
+                // 额外安全：清空输入
+                passwordInput.value = '';
+            } else {
+                // 显示错误提示
+                authError.classList.add('show');
+                setTimeout(() => {
+                    authError.classList.remove('show');
+                }, 1800);
+                passwordInput.value = '';
+                passwordInput.focus();
+            }
+        }
+
+        // 认证成功：隐藏遮罩，显示管理后台
+        function grantAccess() {
+            overlay.classList.add('hidden');
+            adminCard.classList.add('visible');
+            // 清空敏感数据
+            passwordInput.value = '';
+            // 如果有自动聚焦干扰，移除
+            passwordInput.blur();
+            // 重置尝试次数（可选，但成功后不再需要）
+            // 但为了再次锁定？不需要了，页面不重新显示登录框。
+            // 完全销毁遮罩？保留但不可见。
+        }
+
+        // 验证逻辑
+        function verifyPassword() {
+            if (isLocked) {
+                lockedMsg.classList.add('show');
+                return;
+            }
+            const pwd = passwordInput.value.trim();
+            if (pwd === '') {
+                authError.textContent = '✗ 请输入密码';
+                authError.classList.add('show');
+                setTimeout(() => authError.classList.remove('show'), 1500);
+                return;
+            }
+            if (pwd === CORRECT_PASSWORD) {
+                // 密码正确！
+                grantAccess();
+            } else {
+                authError.textContent = '✗ 密码错误，请重试';
+                handleWrongPassword();
+            }
+        }
+
+        // 事件绑定
+        authBtn.addEventListener('click', verifyPassword);
+        passwordInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                verifyPassword();
+            }
+        });
+
+        // 初始更新
+        updateAttemptDisplay();
+
+        // ---------- 以下为原有管理后台功能 (成员渲染, iframe等) ----------
         const membersRaw = [
             "降落是737gjs八v八室长",
             "B747副室长",
@@ -395,11 +659,8 @@
             "耐心的雷电猴40x5",
             "耐心的雷电猴4Ox5"
         ];
-
-        // 去重？保留所有，包括重复项（忠实于文档）
         const memberList = [...membersRaw];
 
-        // 图标映射（趣味）
         function getIconForMember(name) {
             if (name.includes('737') || name.includes('C919') || name.includes('A320') || name.includes('A330') || name.includes('A350') || name.includes('747') || name.includes('MD11') || name.includes('DC11')) {
                 return '🛩️';
@@ -417,7 +678,7 @@
             const container = document.getElementById('memberContainer');
             if (!container) return;
             let html = '';
-            memberList.forEach((name, idx) => {
+            memberList.forEach((name) => {
                 const icon = getIconForMember(name);
                 html += `<div class="member-item">
                     <span class="member-icon">${icon}</span>
@@ -428,7 +689,7 @@
         }
         renderMembers();
 
-        // ---------- iframe 刷新 & 时间戳 ----------
+        // iframe & 时间戳
         const iframe = document.getElementById('siteIframe');
         const refreshBtn = document.getElementById('refreshIframeBtn');
         const timestampSpan = document.getElementById('timestampSpan');
@@ -439,46 +700,33 @@
             timestampSpan.textContent = `⏱️ ${str}`;
         }
         updateTimestamp();
-        setInterval(updateTimestamp, 3000);
+        setInterval(updateTimestamp, 4000);
 
-        // 刷新 iframe (保留src)
         function refreshIframe() {
             if (!iframe) return;
             const currentSrc = iframe.src;
             if (currentSrc) {
-                // 加一个时间戳避免缓存
                 const separator = currentSrc.includes('?') ? '&' : '?';
                 iframe.src = currentSrc + separator + '_t=' + Date.now();
             } else {
                 iframe.src = 'https://wingworkstudio.github.io';
             }
-            // 更新时间戳
             updateTimestamp();
         }
 
         refreshBtn.addEventListener('click', refreshIframe);
-
-        // 若iframe加载失败，显示占位提示（但保留跨域限制）
-        iframe.addEventListener('error', function() {
-            // 静默处理，无法获取具体错误
-        });
-
-        // 额外：双击刷新
         const previewHeader = document.querySelector('.preview-header');
         if (previewHeader) {
             previewHeader.addEventListener('dblclick', refreshIframe);
         }
 
-        // 初始化后每60秒自动刷新一次iframe，保证时况较新（可选）
-        let autoRefreshTimer = setInterval(refreshIframe, 90000); // 90秒
-
-        // 页面卸载清理定时器
+        // 自动刷新 (90s)
+        let autoRefreshTimer = setInterval(refreshIframe, 90000);
         window.addEventListener('beforeunload', function() {
             if (autoRefreshTimer) clearInterval(autoRefreshTimer);
         });
 
-        // 控制台提示
-        console.log('✈️ 飞友工作室 Admin 面板 · 成员列表已加载');
+        console.log('✈️ 飞友工作室 Admin 面板 · 已加载认证模块');
     })();
 </script>
 </body>
