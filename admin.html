@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>飞友工作室 · 管理后台</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background: #0d111c;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .admin-card {
+            width: 100%;
+            max-width: 1200px;
+            background: rgba(22, 30, 49, 0.82);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 40px;
+            padding: 28px 28px 32px;
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(76, 130, 250, 0.15);
+            border: 1px solid rgba(140, 170, 215, 0.15);
+            transition: all 0.2s;
+        }
+
+        .header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 28px;
+            border-bottom: 1px solid rgba(195, 211, 240, 0.1);
+            padding-bottom: 16px;
+        }
+
+        .brand-admin {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .badge-lock {
+            background: #20344f;
+            color: #b8d0ff;
+            padding: 6px 18px;
+            border-radius: 60px;
+            font-size: 14px;
+            font-weight: 520;
+            letter-spacing: 0.3px;
+            border: 1px solid #3b5780;
+            box-shadow: 0 0 8px rgba(66, 133, 244, 0.2);
+        }
+
+        .badge-lock i {
+            font-style: normal;
+            margin-right: 6px;
+        }
+
+        .member-title {
+            font-size: 22px;
+            font-weight: 620;
+            color: #ebf2fe;
+            letter-spacing: 0.5px;
+        }
+
+        .member-title span {
+            background: #264570;
+            padding: 0 14px;
+            border-radius: 40px;
+            color: #bbd5ff;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+
+        .grid-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px;
+        }
+
+        /* 成员列表 */
+        .member-list {
+            background: rgba(12, 20, 35, 0.6);
+            border-radius: 28px;
+            padding: 18px 16px 14px;
+            border: 1px solid rgba(74, 114, 179, 0.2);
+            backdrop-filter: blur(4px);
+            max-height: 440px;
+            overflow-y: auto;
+        }
+
+        .member-list::-webkit-scrollbar {
+            width: 5px;
+        }
+        .member-list::-webkit-scrollbar-track {
+            background: #1a2338;
+            border-radius: 20px;
+        }
+        .member-list::-webkit-scrollbar-thumb {
+            background: #46648b;
+            border-radius: 20px;
+        }
+
+        .list-header {
+            display: flex;
+            justify-content: space-between;
+            color: #98b1da;
+            font-size: 15px;
+            font-weight: 470;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #31486b;
+            margin-bottom: 10px;
+        }
+
+        .member-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 8px;
+            border-radius: 20px;
+            background: rgba(37, 53, 83, 0.2);
+            margin-bottom: 6px;
+            color: #dde6fa;
+            font-size: 15px;
+            font-weight: 410;
+            transition: 0.1s;
+            border-left: 3px solid transparent;
+        }
+
+        .member-item:nth-child(odd) {
+            background: rgba(43, 63, 97, 0.2);
+        }
+
+        .member-item:hover {
+            background: #283a59;
+            border-left-color: #739bdf;
+        }
+
+        .member-icon {
+            font-size: 18px;
+            opacity: 0.8;
+            min-width: 26px;
+            text-align: center;
+        }
+
+        .member-name {
+            word-break: break-word;
+        }
+
+        /* iframe 卡片 */
+        .site-preview {
+            background: #0b1322;
+            border-radius: 28px;
+            overflow: hidden;
+            border: 1px solid rgba(71, 116, 194, 0.25);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .preview-header {
+            background: #141e33;
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid #293f62;
+        }
+
+        .preview-dot {
+            display: flex;
+            gap: 6px;
+        }
+        .preview-dot span {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #41577a;
+        }
+        .preview-dot span:nth-child(1) { background: #fd645b; }
+        .preview-dot span:nth-child(2) { background: #fdbc40; }
+        .preview-dot span:nth-child(3) { background: #34c84a; }
+
+        .preview-url {
+            color: #afc2e6;
+            font-size: 14px;
+            background: #1b2843;
+            padding: 4px 18px;
+            border-radius: 60px;
+            letter-spacing: 0.2px;
+            flex: 1;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            border: 1px solid #324d73;
+        }
+
+        .refresh-btn {
+            background: #1f3452;
+            border: none;
+            color: #b7cfef;
+            padding: 6px 18px;
+            border-radius: 60px;
+            font-size: 13px;
+            font-weight: 510;
+            cursor: pointer;
+            transition: 0.15s;
+            border: 1px solid #3b5a82;
+        }
+
+        .refresh-btn:active {
+            transform: scale(0.92);
+            background: #14223a;
+        }
+
+        .iframe-wrapper {
+            width: 100%;
+            height: 390px;
+            background: #070d17;
+        }
+
+        .iframe-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #fff;
+        }
+
+        .footer-admin {
+            margin-top: 24px;
+            text-align: center;
+            color: #627597;
+            font-size: 13px;
+            border-top: 1px solid rgba(69, 99, 144, 0.15);
+            padding-top: 18px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .footer-admin a {
+            color: #87acdf;
+            text-decoration: none;
+            border-bottom: 1px dotted #406396;
+        }
+
+        .back-link {
+            background: #1a2942;
+            padding: 4px 18px;
+            border-radius: 60px;
+            font-size: 13px;
+        }
+
+        @media (max-width: 780px) {
+            .grid-wrapper {
+                grid-template-columns: 1fr;
+                gap: 22px;
+            }
+            .admin-card {
+                padding: 20px 16px;
+            }
+            .member-list {
+                max-height: 340px;
+            }
+            .iframe-wrapper {
+                height: 280px;
+            }
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            .brand-admin {
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (max-width: 430px) {
+            .member-item {
+                font-size: 14px;
+                padding: 8px 6px;
+            }
+            .preview-url {
+                font-size: 11px;
+                padding: 4px 10px;
+            }
+            .refresh-btn {
+                font-size: 12px;
+                padding: 4px 12px;
+            }
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #41d07a;
+            border-radius: 50%;
+            margin-right: 6px;
+            box-shadow: 0 0 8px #39c56a;
+        }
+    </style>
+</head>
+<body>
+<div class="admin-card">
+    <!-- 头部 -->
+    <div class="header">
+        <div class="brand-admin">
+            <span class="member-title">✈️ 飞友工作室 · 管理台 <span>ADMIN</span></span>
+        </div>
+        <div class="badge-lock"><i>🔐</i> 管理员授权 · 熵盾</div>
+    </div>
+
+    <!-- 双栏布局：成员 + 网站时况 -->
+    <div class="grid-wrapper">
+        <!-- 左侧：工作室成员名录 (依据文档) -->
+        <div class="member-list">
+            <div class="list-header">
+                <span>👥 工作室成员 (2026)</span>
+                <span>#</span>
+            </div>
+            <div id="memberContainer">
+                <!-- 由 JS 动态渲染成员列表，保留原始顺序及昵称风格 -->
+            </div>
+            <div style="margin-top: 8px; color:#60789f; font-size:13px; padding:4px 6px;">
+                <span style="background:#1b2a44; padding:2px 14px; border-radius:40px;">✈️ 以上成员来自 wingworkstudio 文档</span>
+            </div>
+        </div>
+
+        <!-- 右侧：网站实时预览 (wingworkstudio.github.io) -->
+        <div class="site-preview">
+            <div class="preview-header">
+                <div class="preview-dot">
+                    <span></span><span></span><span></span>
+                </div>
+                <div class="preview-url" id="siteUrlDisplay">🌐 wingworkstudio.github.io</div>
+                <button class="refresh-btn" id="refreshIframeBtn">⟳ 刷新</button>
+            </div>
+            <div class="iframe-wrapper">
+                <iframe id="siteIframe" 
+                    src="https://wingworkstudio.github.io" 
+                    sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+                    loading="lazy"
+                    title="飞友工作室官网">
+                </iframe>
+            </div>
+            <div style="padding: 8px 14px; background:#0f182b; border-top:1px solid #213454; color:#7592c0; font-size:13px; display:flex; justify-content:space-between;">
+                <span><span class="status-indicator"></span> 站点时况 · 直连</span>
+                <span id="timestampSpan">⏱️ 加载中...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部 -->
+    <div class="footer-admin">
+        <span>🔒 内部管理 · 仅限授权人员</span>
+        <span class="back-link"><a href="javascript:void(0)" onclick="history.back();">← 返回验证</a>   <a href="https://github.com/wingworkstudio" target="_blank">GitHub</a></span>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ---------- 成员数据 (严格按照文档内容，保留原样) ----------
+        const membersRaw = [
+            "降落是737gjs八v八室长",
+            "B747副室长",
+            "我是ITNW副室长",
+            "利库扩孔",
+            "一架海南航空的A320",
+            "一架在香港进近的东航A330",
+            "一架在停机坪上国航空客A350",
+            "KOREAN737",
+            "一架正在起飞的联邦MD11",
+            "一架正在收起落架的A330",
+            "33DONGJUNKAI",
+            "喵系统",
+            "飞友C919",
+            "本命A350",
+            "日本春秋737",
+            "果断的花粉蝶bl54",
+            "一架DC11",
+            "一架正在着陆的C919",
+            "所有的恐惧都源于火力不足",
+            "耐心的雷电猴40x5",
+            "耐心的雷电猴4Ox5"
+        ];
+
+        // 去重？保留所有，包括重复项（忠实于文档）
+        const memberList = [...membersRaw];
+
+        // 图标映射（趣味）
+        function getIconForMember(name) {
+            if (name.includes('737') || name.includes('C919') || name.includes('A320') || name.includes('A330') || name.includes('A350') || name.includes('747') || name.includes('MD11') || name.includes('DC11')) {
+                return '🛩️';
+            }
+            if (name.includes('室长') || name.includes('副室长')) return '👨‍✈️';
+            if (name.includes('KOREAN') || name.includes('春秋')) return '🇰🇷';
+            if (name.includes('猴')) return '🐒';
+            if (name.includes('火力')) return '🔥';
+            if (name.includes('喵')) return '🐱';
+            if (name.includes('花粉')) return '🌸';
+            return '✈️';
+        }
+
+        function renderMembers() {
+            const container = document.getElementById('memberContainer');
+            if (!container) return;
+            let html = '';
+            memberList.forEach((name, idx) => {
+                const icon = getIconForMember(name);
+                html += `<div class="member-item">
+                    <span class="member-icon">${icon}</span>
+                    <span class="member-name">${name}</span>
+                </div>`;
+            });
+            container.innerHTML = html;
+        }
+        renderMembers();
+
+        // ---------- iframe 刷新 & 时间戳 ----------
+        const iframe = document.getElementById('siteIframe');
+        const refreshBtn = document.getElementById('refreshIframeBtn');
+        const timestampSpan = document.getElementById('timestampSpan');
+
+        function updateTimestamp() {
+            const now = new Date();
+            const str = now.toLocaleString('zh-CN', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            timestampSpan.textContent = `⏱️ ${str}`;
+        }
+        updateTimestamp();
+        setInterval(updateTimestamp, 3000);
+
+        // 刷新 iframe (保留src)
+        function refreshIframe() {
+            if (!iframe) return;
+            const currentSrc = iframe.src;
+            if (currentSrc) {
+                // 加一个时间戳避免缓存
+                const separator = currentSrc.includes('?') ? '&' : '?';
+                iframe.src = currentSrc + separator + '_t=' + Date.now();
+            } else {
+                iframe.src = 'https://wingworkstudio.github.io';
+            }
+            // 更新时间戳
+            updateTimestamp();
+        }
+
+        refreshBtn.addEventListener('click', refreshIframe);
+
+        // 若iframe加载失败，显示占位提示（但保留跨域限制）
+        iframe.addEventListener('error', function() {
+            // 静默处理，无法获取具体错误
+        });
+
+        // 额外：双击刷新
+        const previewHeader = document.querySelector('.preview-header');
+        if (previewHeader) {
+            previewHeader.addEventListener('dblclick', refreshIframe);
+        }
+
+        // 初始化后每60秒自动刷新一次iframe，保证时况较新（可选）
+        let autoRefreshTimer = setInterval(refreshIframe, 90000); // 90秒
+
+        // 页面卸载清理定时器
+        window.addEventListener('beforeunload', function() {
+            if (autoRefreshTimer) clearInterval(autoRefreshTimer);
+        });
+
+        // 控制台提示
+        console.log('✈️ 飞友工作室 Admin 面板 · 成员列表已加载');
+    })();
+</script>
+</body>
+</html>
