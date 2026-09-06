@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>飞友工作室 · 管理后台</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background: #0d111c;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        /* ----- 登录遮罩层 ----- */
+        .auth-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(9, 14, 27, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            padding: 20px;
+            transition: opacity 0.45s ease;
+        }
+        .auth-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .auth-card {
+            background: #162033;
+            border-radius: 52px;
+            padding: 38px 36px 42px;
+            max-width: 420px;
+            width: 100%;
+            box-shadow: 0 30px 55px rgba(0,0,0,0.8), 0 0 0 1px rgba(72, 126, 230, 0.25);
+            border: 1px solid rgba(110, 160, 235, 0.15);
+            text-align: center;
+            transition: 0.2s;
+        }
+
+        .auth-icon {
+            font-size: 44px;
+            margin-bottom: 6px;
+        }
+        .auth-title {
+            color: #e3edff;
+            font-size: 26px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+        .auth-sub {
+            color: #95afd4;
+            font-size: 15px;
+            margin-bottom: 28px;
+            border-bottom: 1px dashed #2f4770;
+            padding-bottom: 16px;
+        }
+
+        .auth-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+        .auth-input-group input {
+            background: #101b30;
+            border: 1px solid #2f4b78;
+            border-radius: 80px;
+            padding: 16px 22px;
+            font-size: 18px;
+            color: #eaf1ff;
+            outline: none;
+            transition: 0.15s;
+            text-align: center;
+            letter-spacing: 2px;
+            font-weight: 500;
+        }
+        .auth-input-group input:focus {
+            border-color: #6390db;
+            box-shadow: 0 0 0 2px rgba(70, 125, 220, 0.3);
+        }
+        .auth-input-group input:disabled {
+            opacity: 0.5;
+            filter: grayscale(0.6);
+            cursor: not-allowed;
+        }
+
+        .auth-btn {
+            background: #1f3b64;
+            border: none;
+            border-radius: 80px;
+            padding: 15px 20px;
+            font-size: 19px;
+            font-weight: 560;
+            color: #dceaff;
+            border: 1px solid #3a6193;
+            cursor: pointer;
+            transition: 0.12s;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+        }
+        .auth-btn:active {
+            transform: scale(0.96);
+            background: #122845;
+        }
+        .auth-btn:disabled {
+            opacity: 0.4;
+            transform: scale(1);
+            cursor: not-allowed;
+            background: #1f2a42;
+        }
+
+        .auth-error {
+            color: #fcad9f;
+            background: #281f31;
+            padding: 10px 12px;
+            border-radius: 60px;
+            font-size: 14px;
+            margin-top: 10px;
+            border: 1px solid #794a4a;
+            display: none;
+        }
+        .auth-error.show {
+            display: block;
+        }
+
+        .auth-locked-msg {
+            color: #cb9d7c;
+            font-size: 15px;
+            background: #291e21;
+            padding: 12px;
+            border-radius: 60px;
+            border: 1px solid #784545;
+            margin-top: 12px;
+            display: none;
+        }
+        .auth-locked-msg.show {
+            display: block;
+        }
+
+        .attempt-badge {
+            color: #869fc7;
+            font-size: 14px;
+            margin-top: 6px;
+        }
+
+        /* ----- 管理后台卡片 (初始隐藏) ----- */
+        .admin-card {
+            width: 100%;
+            max-width: 1200px;
+            background: rgba(22, 30, 49, 0.88);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 40px;
+            padding: 28px 28px 32px;
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(76, 130, 250, 0.15);
+            border: 1px solid rgba(140, 170, 215, 0.15);
+            transition: all 0.2s;
+            display: none;  /* 默认隐藏，认证通过后显示 */
+        }
+
+        .admin-card.visible {
+            display: block;
+        }
+
+        .header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 28px;
+            border-bottom: 1px solid rgba(195, 211, 240, 0.1);
+            padding-bottom: 16px;
+        }
+
+        .brand-admin {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .badge-lock {
+            background: #20344f;
+            color: #b8d0ff;
+            padding: 6px 18px;
+            border-radius: 60px;
+            font-size: 14px;
+            font-weight: 520;
+            letter-spacing: 0.3px;
+            border: 1px solid #3b5780;
+            box-shadow: 0 0 8px rgba(66, 133, 244, 0.2);
+        }
+
+        .badge-lock i {
+            font-style: normal;
+            margin-right: 6px;
+        }
+
+        .member-title {
+            font-size: 22px;
+            font-weight: 620;
+            color: #ebf2fe;
+            letter-spacing: 0.5px;
+        }
+
+        .member-title span {
+            background: #264570;
+            padding: 0 14px;
+            border-radius: 40px;
+            color: #bbd5ff;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+
+        .grid-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px;
+        }
+
+        /* 成员列表 */
+        .member-list {
+            background: rgba(12, 20, 35, 0.6);
+            border-radius: 28px;
+            padding: 18px 16px 14px;
+            border: 1px solid rgba(74, 114, 179, 0.2);
+            backdrop-filter: blur(4px);
+            max-height: 440px;
+            overflow-y: auto;
+        }
+
+        .member-list::-webkit-scrollbar {
+            width: 5px;
+        }
+        .member-list::-webkit-scrollbar-track {
+            background: #1a2338;
+            border-radius: 20px;
+        }
+        .member-list::-webkit-scrollbar-thumb {
+            background: #46648b;
+            border-radius: 20px;
+        }
+
+        .list-header {
+            display: flex;
+            justify-content: space-between;
+            color: #98b1da;
+            font-size: 15px;
+            font-weight: 470;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #31486b;
+            margin-bottom: 10px;
+        }
+
+        .member-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 8px;
+            border-radius: 20px;
+            background: rgba(37, 53, 83, 0.2);
+            margin-bottom: 6px;
+            color: #dde6fa;
+            font-size: 15px;
+            font-weight: 410;
+            transition: 0.1s;
+            border-left: 3px solid transparent;
+        }
+
+        .member-item:nth-child(odd) {
+            background: rgba(43, 63, 97, 0.2);
+        }
+
+        .member-item:hover {
+            background: #283a59;
+            border-left-color: #739bdf;
+        }
+
+        .member-icon {
+            font-size: 18px;
+            opacity: 0.8;
+            min-width: 26px;
+            text-align: center;
+        }
+
+        .member-name {
+            word-break: break-word;
+        }
+
+        /* iframe 卡片 */
+        .site-preview {
+            background: #0b1322;
+            border-radius: 28px;
+            overflow: hidden;
+            border: 1px solid rgba(71, 116, 194, 0.25);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .preview-header {
+            background: #141e33;
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid #293f62;
+        }
+
+        .preview-dot {
+            display: flex;
+            gap: 6px;
+        }
+        .preview-dot span {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #41577a;
+        }
+        .preview-dot span:nth-child(1) { background: #fd645b; }
+        .preview-dot span:nth-child(2) { background: #fdbc40; }
+        .preview-dot span:nth-child(3) { background: #34c84a; }
+
+        .preview-url {
+            color: #afc2e6;
+            font-size: 14px;
+            background: #1b2843;
+            padding: 4px 18px;
+            border-radius: 60px;
+            letter-spacing: 0.2px;
+            flex: 1;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            border: 1px solid #324d73;
+        }
+
+        .refresh-btn {
+            background: #1f3452;
+            border: none;
+            color: #b7cfef;
+            padding: 6px 18px;
+            border-radius: 60px;
+            font-size: 13px;
+            font-weight: 510;
+            cursor: pointer;
+            transition: 0.15s;
+            border: 1px solid #3b5a82;
+        }
+
+        .refresh-btn:active {
+            transform: scale(0.92);
+            background: #14223a;
+        }
+
+        .iframe-wrapper {
+            width: 100%;
+            height: 390px;
+            background: #070d17;
+        }
+
+        .iframe-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #fff;
+        }
+
+        .footer-admin {
+            margin-top: 24px;
+            text-align: center;
+            color: #627597;
+            font-size: 13px;
+            border-top: 1px solid rgba(69, 99, 144, 0.15);
+            padding-top: 18px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .footer-admin a {
+            color: #87acdf;
+            text-decoration: none;
+            border-bottom: 1px dotted #406396;
+        }
+
+        .back-link {
+            background: #1a2942;
+            padding: 4px 18px;
+            border-radius: 60px;
+            font-size: 13px;
+        }
+
+        @media (max-width: 780px) {
+            .grid-wrapper {
+                grid-template-columns: 1fr;
+                gap: 22px;
+            }
+            .admin-card {
+                padding: 20px 16px;
+            }
+            .member-list {
+                max-height: 340px;
+            }
+            .iframe-wrapper {
+                height: 280px;
+            }
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            .brand-admin {
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (max-width: 430px) {
+            .member-item {
+                font-size: 14px;
+                padding: 8px 6px;
+            }
+            .preview-url {
+                font-size: 11px;
+                padding: 4px 10px;
+            }
+            .refresh-btn {
+                font-size: 12px;
+                padding: 4px 12px;
+            }
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #41d07a;
+            border-radius: 50%;
+            margin-right: 6px;
+            box-shadow: 0 0 8px #39c56a;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ========== 密码认证遮罩 ========== -->
+<div class="auth-overlay" id="authOverlay">
+    <div class="auth-card">
+        <div class="auth-icon">🔐</div>
+        <div class="auth-title">飞友工作室</div>
+        <div class="auth-sub">管理后台 · 授权访问</div>
+        <div class="auth-input-group">
+            <input type="password" id="passwordInput" placeholder="输入管理员密码" autocomplete="off" maxlength="20" />
+        </div>
+        <button class="auth-btn" id="authBtn">验证身份</button>
+        <div class="auth-error" id="authError">✗ 密码错误，请重试</div>
+        <div class="auth-locked-msg" id="lockedMsg">⛔ 密码已锁定 · 请联系管理员</div>
+        <div class="attempt-badge" id="attemptBadge">剩余尝试次数：5</div>
+    </div>
+</div>
+
+<!-- ========== 管理后台主体 (初始隐藏) ========== -->
+<div class="admin-card" id="adminCard">
+    <!-- 头部 -->
+    <div class="header">
+        <div class="brand-admin">
+            <span class="member-title">✈️ 飞友工作室 · 管理台 <span>ADMIN</span></span>
+        </div>
+        <div class="badge-lock"><i>🔐</i> 管理员授权 · 熵盾</div>
+    </div>
+
+    <!-- 双栏布局：成员 + 网站时况 -->
+    <div class="grid-wrapper">
+        <!-- 左侧：工作室成员名录 -->
+        <div class="member-list">
+            <div class="list-header">
+                <span>👥 工作室成员 (2026)</span>
+                <span>#</span>
+            </div>
+            <div id="memberContainer">
+                <!-- 由 JS 动态渲染成员列表 -->
+            </div>
+            <div style="margin-top: 8px; color:#60789f; font-size:13px; padding:4px 6px;">
+                <span style="background:#1b2a44; padding:2px 14px; border-radius:40px;">✈️ 以上成员来自 wingworkstudio 文档</span>
+            </div>
+        </div>
+
+        <!-- 右侧：网站实时预览 -->
+        <div class="site-preview">
+            <div class="preview-header">
+                <div class="preview-dot">
+                    <span></span><span></span><span></span>
+                </div>
+                <div class="preview-url" id="siteUrlDisplay">🌐 wingworkstudio.github.io</div>
+                <button class="refresh-btn" id="refreshIframeBtn">⟳ 刷新</button>
+            </div>
+            <div class="iframe-wrapper">
+                <iframe id="siteIframe" 
+                    src="https://wingworkstudio.github.io" 
+                    sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+                    loading="lazy"
+                    title="飞友工作室官网">
+                </iframe>
+            </div>
+            <div style="padding: 8px 14px; background:#0f182b; border-top:1px solid #213454; color:#7592c0; font-size:13px; display:flex; justify-content:space-between;">
+                <span><span class="status-indicator"></span> 站点时况 · 直连</span>
+                <span id="timestampSpan">⏱️ 加载中...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部 -->
+    <div class="footer-admin">
+        <span>🔒 内部管理 · 仅限授权人员</span>
+        <span class="back-link"><a href="javascript:void(0)" onclick="history.back();">← 返回验证</a>   <a href="https://github.com/wingworkstudio" target="_blank">GitHub</a></span>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ---------- 认证状态 ----------
+        const CORRECT_PASSWORD = '24680';   // 密码不公开，但代码可见；用户要求不公布，故不在界面显示
+        const MAX_ATTEMPTS = 5;
+        let attemptLeft = MAX_ATTEMPTS;
+        let isLocked = false;
+
+        // DOM 元素
+        const overlay = document.getElementById('authOverlay');
+        const adminCard = document.getElementById('adminCard');
+        const passwordInput = document.getElementById('passwordInput');
+        const authBtn = document.getElementById('authBtn');
+        const authError = document.getElementById('authError');
+        const lockedMsg = document.getElementById('lockedMsg');
+        const attemptBadge = document.getElementById('attemptBadge');
+
+        // 更新剩余尝试显示
+        function updateAttemptDisplay() {
+            if (isLocked) {
+                attemptBadge.textContent = '⛔ 已锁定';
+                attemptBadge.style.color = '#cb7a5e';
+            } else {
+                attemptBadge.textContent = `剩余尝试次数：${attemptLeft}`;
+                attemptBadge.style.color = '#869fc7';
+            }
+        }
+
+        // 锁定密码框
+        function lockPassword() {
+            isLocked = true;
+            passwordInput.disabled = true;
+            authBtn.disabled = true;
+            lockedMsg.classList.add('show');
+            authError.classList.remove('show');
+            updateAttemptDisplay();
+        }
+
+        // 错误尝试处理
+        function handleWrongPassword() {
+            attemptLeft--;
+            updateAttemptDisplay();
+            if (attemptLeft <= 0) {
+                lockPassword();
+                // 额外安全：清空输入
+                passwordInput.value = '';
+            } else {
+                // 显示错误提示
+                authError.classList.add('show');
+                setTimeout(() => {
+                    authError.classList.remove('show');
+                }, 1800);
+                passwordInput.value = '';
+                passwordInput.focus();
+            }
+        }
+
+        // 认证成功：隐藏遮罩，显示管理后台
+        function grantAccess() {
+            overlay.classList.add('hidden');
+            adminCard.classList.add('visible');
+            // 清空敏感数据
+            passwordInput.value = '';
+            // 如果有自动聚焦干扰，移除
+            passwordInput.blur();
+            // 重置尝试次数（可选，但成功后不再需要）
+            // 但为了再次锁定？不需要了，页面不重新显示登录框。
+            // 完全销毁遮罩？保留但不可见。
+        }
+
+        // 验证逻辑
+        function verifyPassword() {
+            if (isLocked) {
+                lockedMsg.classList.add('show');
+                return;
+            }
+            const pwd = passwordInput.value.trim();
+            if (pwd === '') {
+                authError.textContent = '✗ 请输入密码';
+                authError.classList.add('show');
+                setTimeout(() => authError.classList.remove('show'), 1500);
+                return;
+            }
+            if (pwd === CORRECT_PASSWORD) {
+                // 密码正确！
+                grantAccess();
+            } else {
+                authError.textContent = '✗ 密码错误，请重试';
+                handleWrongPassword();
+            }
+        }
+
+        // 事件绑定
+        authBtn.addEventListener('click', verifyPassword);
+        passwordInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                verifyPassword();
+            }
+        });
+
+        // 初始更新
+        updateAttemptDisplay();
+
+        // ---------- 以下为原有管理后台功能 (成员渲染, iframe等) ----------
+        const membersRaw = [
+            "降落是737gjs八v八室长",
+            "B747副室长",
+            "我是ITNW副室长",
+            "利库扩孔",
+            "一架海南航空的A320",
+            "一架在香港进近的东航A330",
+            "一架在停机坪上国航空客A350",
+            "KOREAN737",
+            "一架正在起飞的联邦MD11",
+            "一架正在收起落架的A330",
+            "33DONGJUNKAI",
+            "喵系统",
+            "飞友C919",
+            "本命A350",
+            "日本春秋737",
+            "果断的花粉蝶bl54",
+            "一架DC11",
+            "一架正在着陆的C919",
+            "所有的恐惧都源于火力不足",
+            "耐心的雷电猴40x5",
+            "耐心的雷电猴4Ox5"
+        ];
+        const memberList = [...membersRaw];
+
+        function getIconForMember(name) {
+            if (name.includes('737') || name.includes('C919') || name.includes('A320') || name.includes('A330') || name.includes('A350') || name.includes('747') || name.includes('MD11') || name.includes('DC11')) {
+                return '🛩️';
+            }
+            if (name.includes('室长') || name.includes('副室长')) return '👨‍✈️';
+            if (name.includes('KOREAN') || name.includes('春秋')) return '🇰🇷';
+            if (name.includes('猴')) return '🐒';
+            if (name.includes('火力')) return '🔥';
+            if (name.includes('喵')) return '🐱';
+            if (name.includes('花粉')) return '🌸';
+            return '✈️';
+        }
+
+        function renderMembers() {
+            const container = document.getElementById('memberContainer');
+            if (!container) return;
+            let html = '';
+            memberList.forEach((name) => {
+                const icon = getIconForMember(name);
+                html += `<div class="member-item">
+                    <span class="member-icon">${icon}</span>
+                    <span class="member-name">${name}</span>
+                </div>`;
+            });
+            container.innerHTML = html;
+        }
+        renderMembers();
+
+        // iframe & 时间戳
+        const iframe = document.getElementById('siteIframe');
+        const refreshBtn = document.getElementById('refreshIframeBtn');
+        const timestampSpan = document.getElementById('timestampSpan');
+
+        function updateTimestamp() {
+            const now = new Date();
+            const str = now.toLocaleString('zh-CN', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            timestampSpan.textContent = `⏱️ ${str}`;
+        }
+        updateTimestamp();
+        setInterval(updateTimestamp, 4000);
+
+        function refreshIframe() {
+            if (!iframe) return;
+            const currentSrc = iframe.src;
+            if (currentSrc) {
+                const separator = currentSrc.includes('?') ? '&' : '?';
+                iframe.src = currentSrc + separator + '_t=' + Date.now();
+            } else {
+                iframe.src = 'https://wingworkstudio.github.io';
+            }
+            updateTimestamp();
+        }
+
+        refreshBtn.addEventListener('click', refreshIframe);
+        const previewHeader = document.querySelector('.preview-header');
+        if (previewHeader) {
+            previewHeader.addEventListener('dblclick', refreshIframe);
+        }
+
+        // 自动刷新 (90s)
+        let autoRefreshTimer = setInterval(refreshIframe, 90000);
+        window.addEventListener('beforeunload', function() {
+            if (autoRefreshTimer) clearInterval(autoRefreshTimer);
+        });
+
+        console.log('✈️ 飞友工作室 Admin 面板 · 已加载认证模块');
+    })();
+</script>
+</body>
+</html>
