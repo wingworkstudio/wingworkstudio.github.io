@@ -79,4 +79,4 @@ wingworkstudio.github.io/
 > ⚠️ 仅为入口交互趣味性，**不构成鉴权 / 安全防护**。静态前端可绕，请勿据此保护真实数据。
 
 ## License
-MIT（示例内容，可按需调整）
+CC BY-NC-SA 4.0
