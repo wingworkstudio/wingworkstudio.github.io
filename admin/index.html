@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- 静态站无服务端：此页仅为「口令遮挡」，不构成鉴权，请勿存放敏感数据 -->
+  <title>工作室入口 · 飞友工作室</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="stylesheet" href="../assets/css/reset.css">
+  <link rel="stylesheet" href="../assets/css/tokens.css">
+  <link rel="stylesheet" href="../assets/css/layout.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  <main class="gateway">
+    <div class="gateway__brand">🔒</div>
+    <h1 class="gateway__title">工作室内部入口</h1>
+    <p class="gateway__desc">此页仅为口令遮挡，<strong>不构成身份验证或鉴权</strong>。静态站源码公开，请勿在此存放敏感数据。</p>
+
+    <form class="card" style="width:min(340px,90vw);text-align:left;" onsubmit="return checkPass(event)">
+      <label style="font-size:var(--fs-sm);color:var(--color-text-muted);" for="pass">口令</label>
+      <input id="pass" type="password" placeholder="输入口令"
+             style="width:100%;padding:var(--space-3);border-radius:var(--radius-sm);border:1px solid var(--color-border);background:var(--color-bg);color:var(--color-text);margin:var(--space-2) 0 var(--space-4);">
+      <button class="btn btn--primary" type="submit" style="width:100%;justify-content:center;">进入</button>
+      <p id="err" class="muted" style="font-size:var(--fs-xs);margin-top:var(--space-2);text-align:center;"></p>
+    </form>
+
+    <a href="../index.html" class="muted" style="font-size:var(--fs-sm);margin-top:var(--space-6);">← 返回主页</a>
+  </main>
+
+  <script>
+    // 说明：前端口令可被查看源码绕过，仅作遮挡用途
+    function checkPass(e) {
+      e.preventDefault();
+      var pass = document.getElementById("pass").value;
+      var err = document.getElementById("err");
+      // 口令建议在真实部署时改为后端校验；此处仅示意
+      if (pass === "wingworks") {
+        err.style.color = "#2ecc71";
+        err.textContent = "口令正确（示意通过）";
+      } else {
+        err.style.color = "";
+        err.textContent = "口令错误，仅工作室成员可进入。";
+      }
+      return false;
+    }
+  </script>
+</body>
+</html>

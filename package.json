@@ -1,0 +1,15 @@
+{
+  "name": "wingworkstudio.github.io",
+  "description": "飞友工作室 WingWorksStudio 官方站点",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "check": "node _check.js",
+    "test": "node _e2e.js",
+    "validate": "npm run check && npm run test",
+    "start": "python3 -m http.server 8000 --directory ."
+  },
+  "keywords": ["飞友工作室", "WingWorksStudio", "编程猫", "模拟飞行", "航空"],
+  "author": "飞友工作室 WingWorksStudio",
+  "license": "MIT"
+}

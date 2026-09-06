@@ -1,0 +1,93 @@
+/* 布局：容器、站点头尾、导航 */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--space-4);
+}
+
+/* 站点头部 */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  background: rgba(15, 23, 41, 0.85);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--color-border);
+}
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-weight: 700;
+  font-size: var(--fs-base);
+  color: var(--color-text);
+}
+.brand__logo { font-size: 1.4em; }
+.nav { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+.nav a {
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+}
+.nav a:hover, .nav a[aria-current="page"] {
+  color: var(--color-text);
+  background: var(--color-surface);
+}
+
+/* 主内容 */
+.main { padding: var(--space-8) 0 var(--space-8); }
+
+/* Hero */
+.hero {
+  text-align: center;
+  padding: var(--space-8) 0;
+}
+.hero__title {
+  font-size: clamp(1.75rem, 5vw, 2.75rem);
+  margin-bottom: var(--space-3);
+}
+.hero__subtitle { color: var(--color-text-muted); font-size: var(--fs-lg); margin-bottom: var(--space-6); }
+.hero__actions { display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap; }
+
+/* 区块 */
+.section { padding: var(--space-8) 0; }
+.section__head { margin-bottom: var(--space-6); text-align: center; }
+.section__title { margin-bottom: var(--space-2); }
+.section__lead { color: var(--color-text-muted); }
+
+/* 页脚 */
+.site-footer {
+  border-top: 1px solid var(--color-border);
+  padding: var(--space-6) 0;
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: var(--fs-sm);
+}
+.site-footer p + p { margin-top: var(--space-2); }
+
+/* 通用按钮 */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius);
+  font-weight: 600;
+  transition: transform 0.15s, background 0.2s;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn--primary { background: var(--color-primary); color: #fff; }
+.btn--primary:hover { color: #fff; background: var(--color-primary-strong); }
+.btn--ghost { border: 1px solid var(--color-border); color: var(--color-text); }
+.btn--ghost:hover { background: var(--color-surface); color: var(--color-text); }

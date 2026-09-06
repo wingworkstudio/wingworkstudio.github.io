@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>进入工作室 · 飞友工作室 WingWorksStudio</title>
+  <meta name="description" content="飞友工作室 WingWorksStudio 安全网关，向右滑动进入工作室主页。">
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="assets/css/reset.css">
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  <main class="gateway">
+    <div class="gateway__brand">✈️</div>
+    <h1 class="gateway__title" data-brand>飞友工作室 WingWorksStudio</h1>
+    <p class="gateway__desc">航空 & 模拟飞行 & 编程创作 · 向右滑动进入工作室</p>
+
+    <div class="slider" id="slider">
+      <div class="slider__track">
+        <span class="slider__thumb" id="sliderThumb" role="slider"
+              aria-label="向右滑动进入" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">→</span>
+        <span class="slider__text" id="sliderText">向右滑动通过验证</span>
+      </div>
+    </div>
+
+    <!-- 熵值检测仪表：实时显示当前拖动轨迹的香农熵 -->
+    <div class="entropy" id="entropy" aria-live="polite">
+      <div class="entropy__head">
+        <span class="entropy__label">轨迹熵值 H</span>
+        <span class="entropy__value" id="entropyValue">0.00</span>
+      </div>
+      <div class="entropy__bar"><span id="entropyBar"></span></div>
+      <p class="entropy__formula" id="entropyFormula">
+        H = −Σ pᵢ log₂pᵢ · 归一化 · 进度 p = <span id="entropyProgress">0</span>%
+      </p>
+      <p class="entropy__hint" id="entropyHint">拖满且 H ≥ 0.90 方可进入</p>
+    </div>
+
+    <p class="gateway__hint">滑动解锁 · 飞友专属 · 仅为入口交互，不构成鉴权</p>
+  </main>
+
+  <script src="assets/js/common.js"></script>
+  <script src="assets/js/entropy-gate.js"></script>
+</body>
+</html>

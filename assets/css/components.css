@@ -1,0 +1,259 @@
+/* 组件：卡片、网格、时间线、滑动解锁等 */
+.grid {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+
+/* 通用卡片 */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space-6);
+  box-shadow: var(--shadow);
+  transition: transform 0.2s, border-color 0.2s;
+}
+.card:hover { transform: translateY(-4px); border-color: var(--color-primary); }
+
+/* 作品卡 */
+.work__tag {
+  display: inline-block;
+  font-size: var(--fs-xs);
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-sm);
+  background: var(--color-primary);
+  color: #fff;
+  margin-bottom: var(--space-3);
+}
+.work__title { margin-bottom: var(--space-2); }
+.work__desc { color: var(--color-text-muted); font-size: var(--fs-sm); margin-bottom: var(--space-4); }
+.work__link { font-weight: 600; }
+
+/* 成员卡 */
+.member__head { display: flex; align-items: baseline; gap: var(--space-3); margin-bottom: var(--space-3); }
+.member__role {
+  font-size: var(--fs-xs);
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-sm);
+  background: var(--color-accent);
+  color: #3a2a00;
+  font-weight: 700;
+}
+.member__name { font-size: var(--fs-base); }
+.member__aircraft { color: var(--color-text-muted); font-size: var(--fs-sm); margin-bottom: var(--space-3); }
+.member__works { font-size: var(--fs-sm); color: var(--color-text-muted); }
+.member__works li { padding-left: var(--space-4); position: relative; }
+.member__works li::before { content: "✈"; position: absolute; left: 0; }
+
+/* 时间线 */
+.timeline { position: relative; padding-left: var(--space-6); }
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--color-border);
+}
+.timeline__item {
+  position: relative;
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+.timeline__item:last-child { border-bottom: none; }
+.timeline__item::before {
+  content: "";
+  position: absolute;
+  left: calc(-1 * var(--space-6) - 2px);
+  top: var(--space-5);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  border: 2px solid var(--color-bg);
+}
+.timeline__date { display: block; font-size: var(--fs-xs); color: var(--color-accent); font-weight: 700; margin-bottom: var(--space-1); }
+.timeline__text { margin-bottom: var(--space-1); }
+.timeline__author { font-size: var(--fs-sm); color: var(--color-text-muted); }
+
+/* 滑动解锁（gateway） */
+.gateway {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+  text-align: center;
+}
+.gateway__brand { font-size: 2rem; margin-bottom: var(--space-2); }
+.gateway__title { font-size: var(--fs-xl); margin-bottom: var(--space-2); }
+.gateway__desc { color: var(--color-text-muted); margin-bottom: var(--space-8); }
+.slider {
+  width: min(360px, 90vw);
+  background: var(--color-surface);
+  border-radius: 999px;
+  padding: var(--space-2);
+  position: relative;
+  border: 1px solid var(--color-border);
+}
+.slider__track {
+  height: 52px;
+  border-radius: 999px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  font-size: var(--fs-sm);
+  user-select: none;
+}
+.slider__thumb {
+  position: absolute;
+  left: var(--space-1);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  cursor: grab;
+  transition: background 0.2s;
+  z-index: 2;
+}
+.slider__thumb:active { cursor: grabbing; background: var(--color-primary-strong); }
+.slider.is-unlocked .slider__thumb { background: #2ecc71; }
+.gateway__hint { margin-top: var(--space-4); font-size: var(--fs-xs); color: var(--color-text-muted); }
+
+/* 联系方式 */
+.contact-grid { display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.contact-card { text-align: center; }
+.contact-card__label { color: var(--color-text-muted); font-size: var(--fs-sm); margin-bottom: var(--space-2); }
+.contact-card__value { font-weight: 700; margin-bottom: var(--space-3); }
+.copy-btn {
+  background: var(--color-primary);
+  color: #fff;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-sm);
+  transition: background 0.2s;
+}
+.copy-btn:hover { background: var(--color-primary-strong); }
+
+/* FAQ */
+.faq__item { margin-bottom: var(--space-4); }
+.faq__q { font-weight: 700; color: var(--color-accent); margin-bottom: var(--space-1); }
+.faq__a { color: var(--color-text-muted); }
+
+/* 彩蛋播放键 */
+.audio-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius);
+  color: var(--color-text);
+  margin-top: var(--space-4);
+  transition: border-color 0.2s;
+}
+.audio-btn:hover { border-color: var(--color-primary); }
+
+/* 工具类 */
+.text-center { text-align: center; }
+.muted { color: var(--color-text-muted); }
+.mt-4 { margin-top: var(--space-4); }
+.mb-4 { margin-bottom: var(--space-4); }
+
+/* 熵值检测仪表（gateway） */
+.entropy {
+  width: min(360px, 90vw);
+  margin: var(--space-6) auto 0;
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  text-align: left;
+}
+.entropy__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+}
+.entropy__label { font-size: var(--fs-sm); color: var(--color-text-muted); }
+.entropy__value {
+  font-size: 1.75rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-primary);
+}
+.entropy__bar {
+  height: 8px;
+  background: var(--color-border);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: var(--space-3);
+}
+.entropy__bar > span {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--color-accent), var(--color-primary));
+  transition: width 0.15s ease;
+}
+.entropy__formula {
+  font-size: var(--fs-xs);
+  color: var(--color-text-muted);
+  font-family: ui-monospace, "SF Mono", Consolas, monospace;
+  margin-bottom: var(--space-1);
+}
+.entropy__hint { font-size: var(--fs-xs); color: var(--color-text-muted); }
+
+/* ===== 熵值检测卡片（index.html 内联模式） ===== */
+.entropy-gate {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+  text-align: center;
+}
+.entropy-gate__brand { font-size: 2rem; margin-bottom: var(--space-2); }
+.entropy-gate__title { font-size: var(--fs-xl); margin-bottom: var(--space-2); }
+.entropy-gate__desc { color: var(--color-text-muted); margin-bottom: var(--space-8); }
+.entropy-gate__note { margin-top: var(--space-4); font-size: var(--fs-xs); color: var(--color-text-muted); }
+.entropy-gate.is-revealed { display: none; }
+
+/* 主内容遮挡：检测通过前模糊 + 禁止交互，揭示后恢复 */
+.content-locked {
+  filter: blur(10px);
+  opacity: 0.35;
+  pointer-events: none;
+  transition: filter 0.5s ease, opacity 0.5s ease;
+}
+.content-locked.is-revealed {
+  filter: none;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* 移动端适配 */
+@media (max-width: 640px) {
+  :root { --header-h: 54px; }
+  .nav { gap: var(--space-1); }
+  .nav a { padding: var(--space-1) var(--space-2); font-size: var(--fs-xs); }
+  .brand span:not(.brand__logo) { display: none; } /* 窄屏只留 logo */
+  .hero { padding: var(--space-6) 0; }
+  .section { padding: var(--space-6) 0; }
+  .grid { grid-template-columns: 1fr; }
+}

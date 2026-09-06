@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>工作室动态 · 飞友工作室 WingWorksStudio</title>
+  <meta name="description" content="飞友工作室 WingWorksStudio 最新动态与成员日常。">
+  <meta name="author" content="飞友工作室 WingWorksStudio">
+  <link rel="canonical" href="https://wingworkstudio.github.io/news.html">
+  <meta property="og:title" content="工作室动态 · 飞友工作室 WingWorksStudio">
+  <link rel="stylesheet" href="assets/css/reset.css">
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="index.html"><span class="brand__logo">✈️</span><span data-brand>飞友工作室</span></a>
+      <nav class="nav" aria-label="主导航">
+        <a href="about.html">工作室</a>
+        <a href="members.html">人员</a>
+        <a href="index.html#works">作品</a>
+        <a href="news.html" aria-current="page">动态</a>
+        <a href="join.html">招新</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">联系</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main">
+    <section class="section container">
+      <div class="section__head">
+        <h1 class="section__title">📢 工作室动态</h1>
+        <p class="section__lead">最新消息，按时间倒序排列</p>
+      </div>
+      <div id="newsTimeline"><!-- news.js 注入 --></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>✈️ <span data-brand>飞友工作室 WingWorksStudio</span></p>
+      <p>基于编程猫社区 · © <span data-year>2026</span> 保留所有权利 · 未备案</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/common.js"></script>
+  <script src="assets/js/news.js"></script>
+  <script>
+    renderNews("#newsTimeline");
+  </script>
+</body>
+</html>

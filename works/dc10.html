@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DC-10-10 模拟飞行 · 飞友工作室 WingWorksStudio</title>
+  <meta name="description" content="由飞友C919制作，经典三发客机模拟体验。">
+  <meta name="author" content="飞友工作室 WingWorksStudio">
+  <link rel="canonical" href="https://wingworkstudio.github.io/works/dc10.html">
+  <link rel="stylesheet" href="../assets/css/reset.css">
+  <link rel="stylesheet" href="../assets/css/tokens.css">
+  <link rel="stylesheet" href="../assets/css/layout.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+  <style>
+    .unavailable-notice {
+      margin: 2rem 0;
+      border-radius: 12px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #fff3cd 0%, #ffe0b2 100%);
+      border: 2px dashed #ff9800;
+      text-align: center;
+      padding: 3rem 1.5rem;
+    }
+    .unavailable-notice .notice-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .unavailable-notice h3 { color: #e65100; font-size: 1.3rem; margin-bottom: 0.5rem; }
+    .unavailable-notice p { color: #bf360c; max-width: 500px; margin: 0 auto 1.5rem; line-height: 1.6; }
+
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.6); z-index: 9999;
+      align-items: center; justify-content: center; padding: 1rem;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-box {
+      background: #fff; border-radius: 16px; max-width: 480px; width: 100%;
+      padding: 2rem; text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      animation: modalIn 0.3s ease-out;
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(20px) scale(0.95); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .modal-box .modal-icon { font-size: 3.5rem; margin-bottom: 1rem; }
+    .modal-box h3 { font-size: 1.2rem; color: #e65100; margin-bottom: 0.8rem; }
+    .modal-box p { color: #555; line-height: 1.7; margin-bottom: 1.5rem; }
+    .modal-box .modal-actions { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; }
+    .modal-box .btn { min-width: 140px; }
+    .rant-text { font-size: 0.85rem; color: #999; margin-top: 1rem; font-style: italic; }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="../index.html"><span class="brand__logo">✈️</span><span data-brand>飞友工作室</span></a>
+      <nav class="nav" aria-label="主导航">
+        <a href="../about.html">工作室</a>
+        <a href="../members.html">人员</a>
+        <a href="../index.html#works">作品</a>
+        <a href="../news.html">动态</a>
+        <a href="../join.html">招新</a>
+        <a href="../faq.html">FAQ</a>
+        <a href="../contact.html">联系</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main">
+    <section class="section container" data-work-root>
+      <div class="section__head">
+        <span class="work__tag">经典复刻</span>
+        <h1 class="section__title">DC-10-10 模拟飞行</h1>
+        <p class="section__lead">状态：已完成 · 作者：飞友C919</p>
+      </div>
+
+      <div class="card" style="max-width:900px;margin:0 auto;">
+        <p>由飞友C919制作，经典三发客机模拟体验。</p>
+
+        <div class="unavailable-notice">
+          <div class="notice-icon">🚧</div>
+          <h3>暂时无法在线试玩</h3>
+          <p>编程猫平台正在维护中（今年6月至今已超三个月仍未恢复），播放器链接暂时无法获取。等官方修好了第一时间恢复！</p>
+          <button class="btn btn--primary" onclick="openModal()">🎮 去官方网页玩</button>
+        </div>
+
+        <h3 class="mt-4">✨ 亮点</h3>
+        <ul style="padding-left:1.2em;list-style:disc;color:var(--color-text-muted);">
+          <li>经典三发客机 DC-10</li>
+          <li>DC 系列复刻</li>
+          <li>飞行模拟</li>
+        </ul>
+
+        <a class="btn btn--ghost mt-4" href="../index.html#works">← 返回作品列表</a>
+
+        <p class="rant-text">编程猫官方我恨你，我再也不发作品了（doge）</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal-overlay" id="modal" onclick="handleOverlayClick(event)">
+    <div class="modal-box">
+      <div class="modal-icon">😤</div>
+      <h3>编程猫维护中，暂时没法玩！</h3>
+      <p>
+        今年6月的维护已经持续三个多月了还没搞定……<br>
+        3月那次才40天就修好了啊？这次什么情况？？<br><br>
+        等官方恢复后我会第一时间把链接补上。<br>
+        想催更的话去 <a href="../contact.html">联系页面</a> 留言吧~
+      </p>
+      <div class="modal-actions">
+        <button class="btn btn--ghost" onclick="closeModal()">知道了，退下吧</button>
+        <a class="btn btn--primary" href="https://shequ.codemao.cn" target="_blank" rel="noopener" onclick="closeModal()">去社区逛逛 →</a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>✈️ <span data-brand>飞友工作室 WingWorksStudio</span></p>
+      <p>基于编程猫社区 · © <span data-year>2026</span> 保留所有权利 · 未备案</p>
+    </div>
+  </footer>
+
+  <script src="../assets/js/common.js"></script>
+  <script>
+    function openModal() {
+      document.getElementById('modal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+      document.getElementById('modal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    function handleOverlayClick(e) {
+      if (e.target === e.currentTarget) closeModal();
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeModal();
+    });
+  </script>
+</body>
+</html>

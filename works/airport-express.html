@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>港铁机场快线模拟驾驶 · 飞友工作室 WingWorksStudio</title>
+  <meta name="description" content="由一架在香港进近的东航A330开发。">
+  <meta name="author" content="飞友工作室 WingWorksStudio">
+  <link rel="canonical" href="https://wingworkstudio.github.io/works/airport-express.html">
+  <link rel="stylesheet" href="../assets/css/reset.css">
+  <link rel="stylesheet" href="../assets/css/tokens.css">
+  <link rel="stylesheet" href="../assets/css/layout.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+  <style>
+    /* 作品展示区 */
+    .work-showcase {
+      margin: 2rem 0;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+      background: #000;
+    }
+    .work-showcase iframe {
+      width: 100%;
+      height: 540px;
+      border: none;
+      display: block;
+    }
+    .work-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+    }
+    .work-actions .btn {
+      flex: 1;
+      min-width: 160px;
+      text-align: center;
+    }
+    @media (max-width: 640px) {
+      .work-showcase iframe { height: 360px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="../index.html"><span class="brand__logo">✈️</span><span data-brand>飞友工作室</span></a>
+      <nav class="nav" aria-label="主导航">
+        <a href="../about.html">工作室</a>
+        <a href="../members.html">人员</a>
+        <a href="../index.html#works">作品</a>
+        <a href="../news.html">动态</a>
+        <a href="../join.html">招新</a>
+        <a href="../faq.html">FAQ</a>
+        <a href="../contact.html">联系</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main">
+    <section class="section container" data-work-root>
+      <div class="section__head">
+        <span class="work__tag">上线</span>
+        <h1 class="section__title">港铁机场快线模拟驾驶</h1>
+        <p class="section__lead">状态：已上线 · 作者：一架在香港进近的东航A330</p>
+      </div>
+
+      <div class="card" style="max-width:900px;margin:0 auto;">
+        <p>由一架在香港进近的东航A330开发。</p>
+
+        <!-- 🎮 在线试玩区域 -->
+        <div class="work-showcase">
+          <iframe
+            src="https://player.codemao.cn/new/296439686"
+            allowfullscreen
+            loading="lazy"
+            title="港铁机场快线模拟驾驶 - 在线试玩"
+            sandbox="allow-scripts allow-same-origin allow-popups allow-forms">
+          </iframe>
+        </div>
+
+        <!-- 操作按钮 -->
+        <div class="work-actions">
+          <a class="btn btn--primary" href="https://shequ.codemao.cn/work/296439686" target="_blank" rel="noopener">↗ 去编程猫官网玩</a>
+          <a class="btn btn--ghost" href="../index.html#works">← 返回作品列表</a>
+        </div>
+
+        <h3 class="mt-4">✨ 亮点</h3>
+        <ul style="padding-left:1.2em;list-style:disc;color:var(--color-text-muted);">
+          <li>港铁机场快线</li>
+          <li>模拟驾驶体验</li>
+          <li>轨道交通题材</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>✈️ <span data-brand>飞友工作室 WingWorksStudio</span></p>
+      <p>基于编程猫社区 · © <span data-year>2026</span> 保留所有权利 · 未备案</p>
+    </div>
+  </footer>
+
+  <script src="../assets/js/common.js"></script>
+</body>
+</html>

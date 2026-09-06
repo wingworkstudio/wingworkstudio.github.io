@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 防绕过：未验证则踢回入口 -->
+  <script>
+    if (!sessionStorage.getItem('wing_verified')) {
+      window.location.href = './index.html';
+    }
+  </script>
+
+  <title>飞友工作室 WingWorksStudio · 编程猫航空 & 模拟飞行 & 编程创作</title>
+  <meta name="description" content="飞友工作室 WingWorksStudio 是编程猫社区内的航空爱好者创作团队，专注飞行模拟、航空题材编程作品及相关创意开发。">
+  <meta name="keywords" content="飞友工作室,WingWorksStudio,编程猫,模拟飞行,C919,航空,空管,作品集">
+  <meta name="author" content="飞友工作室 WingWorksStudio">
+  <link rel="canonical" href="https://wingworkstudio.github.io/indexs.html">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="飞友工作室 WingWorksStudio">
+  <meta property="og:title" content="飞友工作室 WingWorksStudio · 航空 & 模拟飞行 & 编程创作">
+  <meta property="og:description" content="编程猫社区内的航空爱好者创作团队，作品涵盖 C919、A320、A350、B747、DC-10 等机型。">
+  <meta property="og:url" content="https://wingworkstudio.github.io/indexs.html">
+  <meta property="og:image" content="./assets/img/og-cover.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="飞友工作室 WingWorksStudio">
+  <meta name="twitter:description" content="航空 & 模拟飞行 & 编程创作 · 编程猫社区">
+
+  <link rel="icon" href="./assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./assets/css/reset.css">
+  <link rel="stylesheet" href="./assets/css/tokens.css">
+  <link rel="stylesheet" href="./assets/css/layout.css">
+  <link rel="stylesheet" href="./assets/css/components.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="./indexs.html">
+        <span class="brand__logo">✈️</span>
+        <span data-brand>飞友工作室</span>
+      </a>
+      
+      <nav class="nav" aria-label="主导航">
+        <a href="./indexs.html">首页</a>
+        <a href="./indexs.html#works">作品</a>
+        <a href="./members.html">成员</a>
+        <a href="./news.html">动态</a>
+        <a href="./about.html">关于</a>
+        <a href="./contact.html">联系</a>
+      </nav>
+      
+    </div>
+  </header>
+
+  <main class="main">
+
+    <section class="hero container">
+      <h1 class="hero__title" data-brand>飞友工作室 WingWorksStudio</h1>
+      <p class="hero__subtitle">编程猫社区 · 航空 & 模拟飞行 & 编程创作</p>
+      <div class="hero__actions">
+        <a class="btn btn--primary" href="./indexs.html#works">🛩️ 查看作品</a>
+        <a class="btn btn--ghost" href="./about.html">了解更多 →</a>
+      </div>
+      <button class="audio-btn" data-audio-play type="button">🎵 点击播放</button>
+      <p class="muted" style="font-size:var(--fs-xs);margin-top:var(--space-2);">
+        彩蛋：配乐由 Web Audio API 合成《Counting Stars》旋律
+      </p>
+    </section>
+
+    <section class="section container" id="works">
+      <div class="section__head">
+        <h2 class="section__title">🏆 精彩瞬间 · 代表作品</h2>
+        <p class="section__lead">覆盖 C919、A320、A350、B747、DC-10、MD-11 等多种机型</p>
+      </div>
+      <div class="grid" id="worksHighlights"><!-- works.js 注入 --></div>
+    </section>
+
+    <section class="section container">
+      <div class="section__head">
+        <h2 class="section__title">探索工作室</h2>
+      </div>
+      <div class="grid">
+        <a class="card" href="./members.html"><h3>👥 人员名单</h3><p class="muted">室长、副室长与各机型飞友成员。</p></a>
+        <a class="card" href="./news.html"><h3>📢 工作室动态</h3><p class="muted">最新消息与成员日常。</p></a>
+        <a class="card" href="./join.html"><h3>🚀 招新说明</h3><p class="muted">欢迎热爱航空与编程的你加入。</p></a>
+        <a class="card" href="./contact.html"><h3>📞 联系我们</h3><p class="muted">私信成员或社区留言。</p></a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>✈️ <span data-brand>飞友工作室 WingWorksStudio</span></p>
+      <p>基于编程猫社区 · © <span data-year>2026</span> 保留所有权利 · 未备案</p>
+    </div>
+  </footer>
+
+  <script src="./assets/js/common.js"></script>
+  <script src="./assets/js/works.js"></script>
+  <script>
+    renderWorksHighlights("#worksHighlights");
+  </script>
+<!-- ===== 彩蛋系统 ===== -->
+<button class="egg-btn" id="eggBtn" title="戳一下有惊喜">🥚</button>
+<div class="egg-overlay" id="eggOverlay">
+  <div class="egg-box">
+    <button class="egg-close" id="eggClose">×</button>
+    <div class="egg-icon" id="eggIcon"></div>
+    <div class="egg-text" id="eggText"></div>
+    <div class="egg-hint">再戳一次换一条 →</div>
+  </div>
+</div>
+<style>
+.egg-btn{position:fixed;bottom:1.5rem;right:1.5rem;width:52px;height:52px;border-radius:50%;border:2px solid #feca57;background:#1a1a2e;font-size:1.6rem;cursor:pointer;z-index:9000;box-shadow:0 4px 16px rgba(254,202,87,0.3);animation:eggWiggle 3s ease-in-out infinite}
+.egg-btn:hover{transform:scale(1.15) rotate(10deg)}
+@keyframes eggWiggle{0%,100%{transform:rotate(0)}25%{transform:rotate(-8deg)}75%{transform:rotate(8deg)}}
+.egg-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:99999;align-items:center;justify-content:center;padding:1rem}
+.egg-overlay.active{display:flex}
+.egg-box{background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);color:#e0e0e0;border-radius:20px;max-width:520px;width:100%;padding:2.5rem 2rem 1.5rem;text-align:center;position:relative;box-shadow:0 25px 80px rgba(0,0,0,0.5);animation:eggPop .35s cubic-bezier(.34,1.56,.64,1)}
+@keyframes eggPop{from{opacity:0;transform:scale(0.5) rotate(-5deg)}to{opacity:1;transform:scale(1) rotate(0)}}
+.egg-close{position:absolute;top:.8rem;right:1rem;background:none;border:none;color:#aaa;font-size:1.8rem;cursor:pointer}
+.egg-close:hover{color:#fff}
+.egg-icon{font-size:4rem;margin-bottom:1rem}
+.egg-text{font-size:1.05rem;line-height:1.8}
+.egg-text strong{color:#feca57}
+.egg-text .brand-tag{display:inline-block;background:rgba(255,255,255,0.1);border-radius:6px;padding:.1rem .5rem;margin:0 .15rem;font-size:.9em}
+.egg-hint{margin-top:1.2rem;font-size:.78rem;color:#666}
+</style>
+<script>
+const eggData=[
+{icon:"🌐🚫",text:"官网的第1个域名是 <strong>wingworkstudio.github.io</strong>，但是室长看了说审核不通过 😭<br>所以我换了个思路——自己搭站，谁也审不了我！<br><span class='brand-tag'>🐙 GitHub Pages</span>"},
+{icon:"⏰🔪",text:"网页作者最讨厌催更了 🔪<br>你要是敢在评论区说\"什么时候更新\"，我就敢让你等三个月。<br><em>（编程猫官方：这招我熟）</em>"},
+{icon:"🚧😤",text:"我在制作网页的时候，正逢编程猫官网维护期 💀<br>作品做不了 → 那就做网页 → 网页做好了 → 作品还是做不了<br>所以你现在看到的是<strong>维护期的副产品</strong>。"},
+{icon:"🕒📄",text:"之所以我会拖延作品发布，是因为我要搞这些网页 🗿<br>作品：等我写完 CSS 就来动你……<br>CSS：你写了三天了。<br>作品：……<br><span class='brand-tag'>💀 死循环</span>"},
+{icon:"✈️🟢",text:"为啥我可以飞起来？（doge）<br>因为我是飞友工作室啊！不开飞机难道开坦克吗 🚁<br><em>——DC-10 三发全开，起飞！</em>"},
+{icon:"🛡️🌍",text:"这个网页用了<strong>国外超级组合</strong>，你别想 DDoS 攻击了 🧱<br>Cloudflare 挡前面，全球分发，你打得到的只有边缘节点。<br><span class='brand-tag'>☁️ Cloudflare</span> <span class='brand-tag'>🐙 GitHub</span>"},
+{icon:"💰🆓",text:"此网站发布成本仅 <strong>0 元</strong> 🎉<br>域名免费，托管免费，数据库免费，CDN 免费。<br>唯一花钱的是电费——和骂编程猫的嗓子。<br><span class='brand-tag'>💸 零元购</span>"},
+{icon:"🎯🆓",text:"<span class='brand-tag'>🎯 DigitalPlat</span> 牛逼！<br>免费二级域名 + 手动续期 + 随时迁移，穷人的救星。<br>虽然 .us.kg 看着像临时工，但<strong>不要钱啊！</strong>"},
+{icon:"☁️🦄",text:"<span class='brand-tag'>☁️ Cloudflare</span> 牛逼！<br>无限带宽 + 免费 SSL + WAF + Workers，一家全包。<br>互联网活菩萨，不接受反驳。"},
+{icon:"🐙🐈",text:"<span class='brand-tag'>🐙 GitHub</span> 牛逼！<span class='brand-tag'>🐈 章鱼猫</span> 牛逼！<br>没有 GitHub Pages 我连个地方放 HTML 都没有。<br>Octocat 永远的神。"},
+{icon:"⚡🗄️",text:"<span class='brand-tag'>⚡ Supabase</span> 牛逼！<br>Postgres + Auth + Storage，一个 anon key 全搞定。<br>免费层 500MB 够我用到毕业。"},
+{icon:"🏮💀",text:"<span class='brand-tag'>🏮 阿里云</span> 拉完了 💀<br>备案、付费、限制、审核——一个不少。<br>这站<strong>一个子儿都不会给阿里云</strong>。<br><em>（手动狗头）</em>"},
+{icon:"📊🔴",text:"编程猫维护进度条：<strong>█████████░ 99%</strong><br>卡在这里已经三个月了 💀<br>不是99%完不成，是根本没在跑。<br><span class='brand-tag'>🚧 永远的99%</span>"},
+{icon:"✈️💻",text:"本页面由<strong>一架在香港进近的东航A330</strong>制作 ✈️<br>进近阶段手没闲着——左手操纵杆，右手写 CSS。<br>塔台：\"你到底在不在下降？\"<br>我：\"在的在的，先让我把 flexbox 调一下。\""},
+{icon:"⏱️🤡",text:"如果你看到这条，说明你<strong>真的很闲</strong> 🤡<br>这个按钮你已经点了很多次了。<br>去看作品吧，别在这刷彩蛋了。<br><em>（但我不拦你）</em>"},
+{icon:"🔢🖱️",text:"这个按钮已经被点了 <strong id='clickCount'>很多</strong> 次 🖱️<br>每一次点击都在消耗你本该用来做作品的时间。<br>你点的不是彩蛋，是<strong>拖延症</strong>。"},
+{icon:"💤📁",text:"作品文件夹：<code>final_v18_REAL_FINAL_3.sb3</code> 💀<br>里面只有一个未完成的角色和三个空积木。<br>文件名越长，进度越短。"},
+{icon:"🧪⚡",text:"<span class='brand-tag'>⚡ Supabase</span> 免费层：超过 7 天没访问会<strong>自动休眠</strong> 😴<br>每次打开网页前 5 秒慢——<br>不是你网差，是数据库在穿衣服。"},
+{icon:"🐙🆓",text:"<span class='brand-tag'>🐙 GitHub</span> 免费仓库上限：<strong>无限</strong><br>我的仓库命名：<br><code>test</code> → <code>test2</code> → <code>test_new</code> → <code>test_actually_works</code><br>没有一个被删过。<br><span class='brand-tag'>🗑️ 数字仓鼠</span>"},
+{icon:"🚄✈️",text:"港铁机场快线 + 空管 + C919 + DC-10<br>选题跨度比<strong>京广高铁</strong>还长 🛤️<br>下次是不是该来个<em>《波音747模拟停机坪摆渡车》</em>？"},
+{icon:"🧱🇨🇳",text:"国内访问 <span class='brand-tag'>☁️ Cloudflare</span> 有时候会抽风 🐌<br>你在国内打开这个网页如果很慢——<br>不是我的问题，是<strong>地球曲率</strong>的问题。"},
+{icon:"🎓📅",text:"这个网页的<strong>最后更新时间</strong>：<br>取决于编程猫什么时候修好 🗓️<br>他们修好了 → 我就有动力更新了<br>他们不修 → 我继续加彩蛋<br><span class='brand-tag'>🎯 甩锅链</span>"}
+];
+let lastIndex=-1,eggClickCount=parseInt(localStorage.getItem('eggClickCount')||'0');
+function showRandomEgg(){eggClickCount++;localStorage.setItem('eggClickCount',eggClickCount);let idx;do{idx=Math.floor(Math.random()*eggData.length)}while(idx===lastIndex&&eggData.length>1);lastIndex=idx;let html=eggData[idx].text;if(html.includes('id="clickCount"')){html=html.replace('<strong id="clickCount">很多</strong>',`<strong id="clickCount">${eggClickCount}</strong>`)}document.getElementById('eggIcon').textContent=eggData[idx].icon;document.getElementById('eggText').innerHTML=html;document.getElementById('eggOverlay').classList.add('active');document.body.style.overflow='hidden'}
+function closeEgg(){document.getElementById('eggOverlay').classList.remove('active');document.body.style.overflow=''}
+document.getElementById('eggBtn').addEventListener('click',showRandomEgg);
+document.getElementById('eggClose').addEventListener('click',closeEgg);
+document.getElementById('eggOverlay').addEventListener('click',function(e){if(e.target===this)closeEgg()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeEgg()});
+(function(){const k=['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];let p=0;document.addEventListener('keydown',function(e){const key=e.key.toLowerCase()==='b'?'b':e.key.toLowerCase()==='a'?'a':e.key;if(key===k[p]){p++;if(p===k.length){p=0;document.getElementById('eggIcon').textContent='👑🎮';document.getElementById('eggText').innerHTML='你发现了 <strong>Konami Code</strong>！<br>30 条命已发放（假的）<br><br><span class="brand-tag">编程猫官方快修！</span> <span class="brand-tag">室长通过审核！</span> <span class="brand-tag">作品不拖延！</span><br><em>（以上均为幻觉）</em>';document.getElementById('eggOverlay').classList.add('active');document.body.style.overflow='hidden'}}else{p=0}})})();
+</script>
+<!-- ===== 彩蛋系统结束 ===== -->
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>飞友工作室 WingWorksStudio · 验证入口</title>
+  <meta name="description" content="飞友工作室 WingWorksStudio 入口验证">
+  <link rel="canonical" href="https://wingworkstudio.github.io/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="飞友工作室 WingWorksStudio">
+  <meta property="og:title" content="飞友工作室 WingWorksStudio · 验证入口">
+  <meta property="og:description" content="航空 & 模拟飞行 & 编程创作">
+  <meta property="og:url" content="https://wingworkstudio.github.io/">
+  <meta property="og:image" content="./assets/img/og-cover.png">
+
+  <link rel="icon" href="./assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./assets/css/reset.css">
+  <link rel="stylesheet" href="./assets/css/tokens.css">
+  <link rel="stylesheet" href="./assets/css/layout.css">
+  <link rel="stylesheet" href="./assets/css/components.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="./index.html">
+        <span class="brand__logo">✈️</span>
+        <span data-brand>飞友工作室</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="main">
+    <section class="entropy-gate" id="entropyGate" aria-labelledby="gateTitle">
+      <div class="entropy-gate__brand">✈️</div>
+      <h1 class="entropy-gate__title" id="gateTitle" data-brand>飞友工作室 WingWorksStudio</h1>
+      <p class="entropy-gate__desc">航空 & 模拟飞行 & 编程创作</p>
+
+      <div class="slider" id="slider">
+        <div class="slider__track">
+          <span class="slider__thumb" id="sliderThumb" role="slider"
+                aria-label="向右滑动完成验证" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">→</span>
+          <span class="slider__text" id="sliderText">向右滑动进入主页</span>
+        </div>
+      </div>
+      <p class="entropy-gate__note">✋ 飞友专属入口</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>✈️ <span data-brand>飞友工作室 WingWorksStudio</span></p>
+      <p>基于编程猫社区 · © <span data-year>2026</span> 保留所有权利 · 未备案</p>
+    </div>
+  </footer>
+
+  <script src="./assets/js/common.js"></script>
+  <script src="./assets/js/entropy-gate.js"></script>
+</body>
+</html>
