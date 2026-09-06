@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>联系我们 · 飞友工作室 WingWorksStudio</title>
+  <meta name="description" content="飞友工作室联系方式：编程猫社区、邮箱（点击复制），QQ 通过图片/中转展示。">
+  <meta name="author" content="飞友工作室 WingWorksStudio">
+  <link rel="canonical" href="https://wingworkstudio.github.io/contact.html">
+  <link rel="stylesheet" href="assets/css/reset.css">
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="index.html"><span class="brand__logo">✈️</span><span data-brand>飞友工作室</span></a>
+      <nav class="nav" aria-label="主导航">
+        <a href="about.html">工作室</a>
+        <a href="members.html">人员</a>
+        <a href="index.html#works">作品</a>
+        <a href="news.html">动态</a>
+        <a href="join.html">招新</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html" aria-current="page">联系</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main">
+    <section class="section container">
+      <div class="section__head">
+        <h1 class="section__title">📞 联系我们</h1>
+        <p class="section__lead">通过社区私信成员，或在下方渠道联系</p>
+      </div>
+
+      <div class="contact-grid" style="max-width:760px;margin:0 auto;">
+        <!-- 邮箱：保留 mailto + 复制按钮 -->
+        <div class="card contact-card">
+          <p class="contact-card__label">反馈邮箱</p>
+          <p class="contact-card__value">luoxizijin@outlook.com</p>
+          <button class="copy-btn" data-copy="luoxizijin@outlook.com" type="button">点击复制</button>
+          <a class="btn btn--ghost mt-4" style="display:inline-flex;" href="mailto:luoxizijin@outlook.com">✉️ 发邮件</a>
+        </div>
+
+        <!-- QQ：图片/中转展示，避免裸文本被爬虫抓取 -->
+        <div class="card contact-card">
+          <p class="contact-card__label">工作室 QQ（图片形式，防爬取）</p>
+          <!-- 说明：正式使用请把 QQ 号做成 assets/img/qq.png 图片替换下方占位；
+               此处用 SVG 占位示意，避免明文出现在 HTML 文本中 -->
+          <div class="qq-display" aria-label="QQ 号以图片形式展示">
+            <svg width="160" height="44" viewBox="0 0 160 44" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="QQ 号图片占位">
+              <rect width="160" height="44" rx="6" fill="#2f6fb0"/>
+              <text x="80" y="28" text-anchor="middle" fill="#fff" font-size="16" font-family="monospace">图片/中转</text>
+            </svg>
+          </div>
+          <p class="muted" style="font-size:var(--fs-xs);margin-top:var(--space-2);">
+            提示：将 QQ 号渲染为图片或中转页展示，避免被爬虫收录。<br>
+            占位替换：`<img src="assets/img/qq.png" alt="工作室 QQ">`
+          </p>
+        </div>
+      </div>
+
+      <p class="text-center muted mt-4" style="font-size:var(--fs-sm);">
+        编程猫社区：搜索「飞友工作室 WingWorksStudio」
+      </p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>✈️ <span data-brand>飞友工作室 WingWorksStudio</span></p>
+      <p>基于编程猫社区 · © <span data-year>2026</span> 保留所有权利 · 未备案</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/common.js"></script>
+<!-- ===== 留言板 ===== -->
+<section class="section container" id="guestbook">
+  <div class="section__head">
+    <h2 class="section__title">💬 飞友留言板</h2>
+    <p class="section__lead">留下你的想法，也可以回复别人的留言 ✈️</p>
+  </div>
+
+  <form class="comment-form" id="commentForm">
+    <div class="form-row">
+      <input type="text" id="commentNickname" placeholder="昵称（留空=匿名飞友）" maxlength="20">
+    </div>
+    <textarea id="commentContent" placeholder="说点什么吧……" maxlength="500" required rows="4"></textarea>
+    <div class="form-actions">
+      <span class="char-count"><span id="charCount">0</span>/500</span>
+      <button type="submit" class="btn btn--primary">发送留言 ✈️</button>
+    </div>
+  </form>
+
+  <div class="comments-list" id="commentsList">
+    <p class="comments-loading">加载中…</p>
+  </div>
+</section>
+
+<style>
+.comment-form{max-width:680px;margin:0 auto 2rem;background:#1a1f29;border:1px solid #2a3340;border-radius:14px;padding:1.5rem;display:flex;flex-direction:column;gap:.8rem}
+.comment-form input,.comment-form textarea{width:100%;padding:.7rem .9rem;border-radius:10px;border:1px solid #2a3340;background:#11161d;color:#e6edf3;font-size:.95rem;resize:vertical;font-family:inherit}
+.comment-form input:focus,.comment-form textarea:focus{outline:none;border-color:#ffb454}
+.form-row{display:flex;gap:.6rem}
+.form-actions{display:flex;justify-content:space-between;align-items:center}
+.char-count{font-size:.8rem;color:#666}
+.comment-form button{white-space:nowrap}
+.comments-list{max-width:680px;margin:0 auto;display:flex;flex-direction:column;gap:1rem}
+.comment-item{background:#1a1f29;border:1px solid #2a3340;border-radius:14px;padding:1.2rem}
+.comment-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem}
+.comment-nickname{font-weight:700;color:#ffb454;font-size:.95rem}
+.comment-time{font-size:.75rem;color:#666}
+.comment-content{color:#c9d1d9;line-height:1.6;font-size:.95rem;margin-bottom:.8rem}
+.comment-actions{display:flex;gap:.6rem;align-items:center}
+.btn-like,.btn-reply-toggle{background:none;border:1px solid #2a3340;border-radius:6px;padding:.3rem .7rem;color:#9aa5b1;cursor:pointer;font-size:.85rem;transition:all .2s}
+.btn-like:hover,.btn-like.liked{color:#ff6b6b;border-color:#ff6b6b}
+.btn-reply-toggle:hover{color:#ffb454;border-color:#ffb454}
+.reply-form{margin-top:.8rem;display:flex;flex-direction:column;gap:.5rem}
+.reply-form input,.reply-form textarea{width:100%;padding:.5rem .7rem;border-radius:8px;border:1px solid #2a3340;background:#0b0f14;color:#e6edf3;font-size:.9rem;font-family:inherit}
+.reply-form textarea{resize:vertical;min-height:60px}
+.reply-form-actions{display:flex;gap:.5rem;justify-content:flex-end}
+.reply-form-actions button{padding:.4rem 1rem;border-radius:6px;border:none;cursor:pointer;font-size:.85rem}
+.reply-form-actions .btn-submit{background:#ffb454;color:#111;font-weight:600}
+.reply-form-actions .btn-cancel{background:transparent;color:#9aa5b1;border:1px solid #2a3340}
+.replies-list{margin-top:.8rem;border-left:2px solid #2a3340;padding-left:1rem;display:flex;flex-direction:column;gap:.6rem}
+.reply-item{padding:.6rem .8rem;background:#0b0f14;border-radius:8px}
+.reply-header{display:flex;justify-content:space-between;margin-bottom:.2rem}
+.reply-nickname{font-weight:600;color:#9fd6ff;font-size:.85rem}
+.reply-time{font-size:.7rem;color:#555}
+.reply-content{color:#aaa;font-size:.9rem;line-height:1.5}
+.comments-loading,.comments-empty{color:#666;text-align:center;padding:1rem}
+</style>
+
+<script>
+const SUPABASE_URL = 'https://kcqimgstfkqbieznxptr.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_LsExdoRXSuFVcTSV-4TXMw_FFyeSd9L';
+const CURRENT_PAGE = 'contact';
+
+let visitorIP = '';
+fetch('https://api.ipify.org?format=json').then(r=>r.json()).then(d=>{visitorIP=d.ip}).catch(()=>{});
+
+async function loadComments() {
+  const list = document.getElementById('commentsList');
+  list.innerHTML = '<p class="comments-loading">加载中…</p>';
+  try {
+    const [cr,rr] = await Promise.all([
+      fetch(SUPABASE_URL+'/rest/v1/comments?page=eq.'+CURRENT_PAGE+'&order=created_at.desc&limit=50',{headers:{'apikey':SUPABASE_ANON_KEY}}),
+      fetch(SUPABASE_URL+'/rest/v1/comment_replies?order=created_at.asc',{headers:{'apikey':SUPABASE_ANON_KEY}})
+    ]);
+    const comments = await cr.json();
+    const replies = await rr.json();
+    if(!comments.length){list.innerHTML='<p class="comments-empty">还没有留言，来做第一个飞友吧 ✈️</p>';return}
+    const replyMap={};
+    replies.forEach(r=>{if(!replyMap[r.comment_id])replyMap[r.comment_id]=[];replyMap[r.comment_id].push(r)});
+    list.innerHTML = comments.map(c=>`
+      <div class="comment-item" data-id="${c.id}">
+        <div class="comment-header"><span class="comment-nickname">${esc(c.nickname)}</span><span class="comment-time">${timeAgo(c.created_at)}</span></div>
+        <div class="comment-content">${esc(c.content)}</div>
+        <div class="comment-actions">
+          <button class="btn-like" data-id="${c.id}" data-likes="${c.likes||0}">❤️ <span class="like-count">${c.likes||0}</span></button>
+          <button class="btn-reply-toggle" onclick="toggleReply(${c.id})">💬 回复</button>
+        </div>
+        <div class="reply-form" id="replyForm_${c.id}" style="display:none">
+          <input type="text" placeholder="昵称（留空=匿名飞友）" maxlength="20" class="reply-nickname">
+          <textarea placeholder="回复内容…" maxlength="300" class="reply-content"></textarea>
+          <div class="reply-form-actions"><button type="button" class="btn-cancel" onclick="toggleReply(${c.id})">取消</button><button type="button" class="btn-submit" onclick="submitReply(${c.id})">回复</button></div>
+        </div>
+        <div class="replies-list" id="replies_${c.id}">${(replyMap[c.id]||[]).map(r=>'<div class="reply-item"><div class="reply-header"><span class="reply-nickname">'+esc(r.nickname)+'</span><span class="reply-time">'+timeAgo(r.created_at)+'</span></div><div class="reply-content">'+esc(r.content)+'</div></div>').join('')}</div>
+      </div>`).join('');
+    document.querySelectorAll('.btn-like').forEach(b=>b.addEventListener('click',()=>likeComment(b)));
+  }catch(e){list.innerHTML='<p class="comments-empty">加载失败了，刷新试试</p>'}
+}
+
+document.getElementById('commentForm').addEventListener('submit',async function(e){
+  e.preventDefault();
+  const nickname=document.getElementById('commentNickname').value.trim()||'匿名飞友';
+  const content=document.getElementById('commentContent').value.trim();
+  if(!content)return;
+  const btn=this.querySelector('button');btn.disabled=true;btn.textContent='发送中…';
+  try{
+    await fetch(SUPABASE_URL+'/rest/v1/comments',{method:'POST',headers:{'apikey':SUPABASE_ANON_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({page:CURRENT_PAGE,nickname,content,likes:0})});
+    document.getElementById('commentContent').value='';document.getElementById('charCount').textContent='0';
+    loadComments();
+  }catch(err){alert('发送失败')}
+  btn.disabled=false;btn.textContent='发送留言 ✈️';
+});
+
+document.getElementById('commentContent').addEventListener('input',function(){document.getElementById('charCount').textContent=this.value.length});
+
+async function likeComment(btn){
+  const id=btn.dataset.id,currentLikes=parseInt(btn.dataset.likes);
+  btn.classList.add('liked');btn.querySelector('.like-count').textContent=currentLikes+1;btn.disabled=true;
+  try{
+    await fetch(SUPABASE_URL+'/rest/v1/comment_likes',{method:'POST',headers:{'apikey':SUPABASE_ANON_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({comment_id:id,ip_hash:visitorIP||'unknown'})});
+    await fetch(SUPABASE_URL+'/rest/v1/comments?id=eq.'+id,{method:'PATCH',headers:{'apikey':SUPABASE_ANON_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({likes:currentLikes+1})});
+  }catch(e){btn.classList.remove('liked');btn.querySelector('.like-count').textContent=currentLikes;btn.disabled=false}
+}
+
+function toggleReply(id){const f=document.getElementById('replyForm_'+id);f.style.display=f.style.display==='none'?'block':'none'}
+async function submitReply(id){
+  const f=document.getElementById('replyForm_'+id);
+  const nickname=f.querySelector('.reply-nickname').value.trim()||'匿名飞友';
+  const content=f.querySelector('.reply-content').value.trim();
+  if(!content)return;
+  await fetch(SUPABASE_URL+'/rest/v1/comment_replies',{method:'POST',headers:{'apikey':SUPABASE_ANON_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({comment_id:id,nickname,content})});
+  loadComments();
+}
+
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function timeAgo(iso){
+  const s=Math.floor((Date.now()-new Date(iso).getTime())/1000);
+  if(s<60)return'刚刚';if(s<3600)return Math.floor(s/60)+' 分钟前';
+  if(s<86400)return Math.floor(s/3600)+' 小时前';
+  return Math.floor(s/86400)+' 天前';
+}
+loadComments();
+</script>
+<!-- ===== 留言板结束 ===== -->
+</body>
+</html>
